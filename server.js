@@ -1,9 +1,13 @@
+require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const { MongoClient } = require('mongodb');
 
 const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || '';
+const API_KEY = process.env.API_KEY || '';
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const DB_PATH = path.join(__dirname, 'data', 'db.json');
 
@@ -19,6 +23,28 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon'
 };
+
+// MongoDB Client Initialization
+let mongoDb = null;
+let mongoConnected = false;
+
+if (MONGODB_URI) {
+  const mongoClient = new MongoClient(MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000,
+    tlsInsecure: true
+  });
+
+  mongoClient.connect()
+    .then(client => {
+      mongoDb = client.db('brothers_transport');
+      mongoConnected = true;
+      console.log('✅ Connected successfully to MongoDB Atlas!');
+    })
+    .catch(err => {
+      console.warn('⚠️ MongoDB Atlas connection warning:', err.message);
+      console.warn('⚡ Operating with local JSON storage engine.');
+    });
+}
 
 function readDB() {
   try {
@@ -62,7 +88,7 @@ function sendJSON(res, statusCode, data) {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key'
   });
   res.end(JSON.stringify(data));
 }
@@ -77,12 +103,21 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(204, {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key'
     });
     return res.end();
   }
 
   // --- API ROUTES ---
+
+  // Config / API Key Endpoint
+  if (pathname === '/api/config' && method === 'GET') {
+    return sendJSON(res, 200, {
+      apiKey: API_KEY,
+      mongoConnected: mongoConnected,
+      status: 'active'
+    });
+  }
 
   // Auth Login API
   if (pathname === '/api/auth/login' && method === 'POST') {
@@ -95,6 +130,14 @@ const server = http.createServer(async (req, res) => {
 
   // GET Drivers
   if (pathname === '/api/drivers' && method === 'GET') {
+    if (mongoConnected && mongoDb) {
+      try {
+        const drivers = await mongoDb.collection('drivers').find({}).sort({ _id: -1 }).toArray();
+        return sendJSON(res, 200, drivers);
+      } catch (e) {
+        console.error('MongoDB GET Drivers error, falling back to local DB:', e.message);
+      }
+    }
     const db = readDB();
     return sendJSON(res, 200, db.drivers || []);
   }
@@ -102,7 +145,6 @@ const server = http.createServer(async (req, res) => {
   // POST Driver
   if (pathname === '/api/drivers' && method === 'POST') {
     const body = await parseJSONBody(req);
-    const db = readDB();
     const newDriver = {
       id: 'drv-' + Date.now(),
       name: body.name || 'Unnamed Driver',
@@ -114,8 +156,19 @@ const server = http.createServer(async (req, res) => {
       status: body.status || 'Active',
       notes: body.notes || ''
     };
+
+    if (mongoConnected && mongoDb) {
+      try {
+        await mongoDb.collection('drivers').insertOne(newDriver);
+      } catch (e) {
+        console.error('MongoDB POST Driver error:', e.message);
+      }
+    }
+
+    const db = readDB();
     db.drivers.unshift(newDriver);
     writeDB(db);
+
     return sendJSON(res, 201, newDriver);
   }
 
@@ -123,6 +176,21 @@ const server = http.createServer(async (req, res) => {
   if (pathname.startsWith('/api/drivers/') && method === 'PUT') {
     const id = pathname.replace('/api/drivers/', '');
     const body = await parseJSONBody(req);
+
+    if (mongoConnected && mongoDb) {
+      try {
+        await mongoDb.collection('drivers').updateOne({ id }, { $set: body });
+        if (body.name || body.carNumber) {
+          await mongoDb.collection('earnings').updateMany(
+            { driverId: id },
+            { $set: { driverName: body.name, carNumber: body.carNumber } }
+          );
+        }
+      } catch (e) {
+        console.error('MongoDB PUT Driver error:', e.message);
+      }
+    }
+
     const db = readDB();
     const index = db.drivers.findIndex(d => d.id === id);
     if (index === -1) return sendJSON(res, 404, { error: 'Driver not found' });
@@ -140,6 +208,15 @@ const server = http.createServer(async (req, res) => {
   // DELETE Driver (/api/drivers/:id)
   if (pathname.startsWith('/api/drivers/') && method === 'DELETE') {
     const id = pathname.replace('/api/drivers/', '');
+
+    if (mongoConnected && mongoDb) {
+      try {
+        await mongoDb.collection('drivers').deleteOne({ id });
+      } catch (e) {
+        console.error('MongoDB DELETE Driver error:', e.message);
+      }
+    }
+
     const db = readDB();
     db.drivers = db.drivers.filter(d => d.id !== id);
     writeDB(db);
@@ -148,6 +225,14 @@ const server = http.createServer(async (req, res) => {
 
   // GET Earnings
   if (pathname === '/api/earnings' && method === 'GET') {
+    if (mongoConnected && mongoDb) {
+      try {
+        const earnings = await mongoDb.collection('earnings').find({}).sort({ date: -1 }).toArray();
+        return sendJSON(res, 200, earnings);
+      } catch (e) {
+        console.error('MongoDB GET Earnings error, falling back to local DB:', e.message);
+      }
+    }
     const db = readDB();
     return sendJSON(res, 200, db.earnings || []);
   }
@@ -156,6 +241,7 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/earnings' && method === 'POST') {
     const body = await parseJSONBody(req);
     const db = readDB();
+
     const total = parseFloat(body.totalEarnings) || 0;
     const fuel = parseFloat(body.fuelExpense) || 0;
     const other = parseFloat(body.otherExpense) || 0;
@@ -176,6 +262,14 @@ const server = http.createServer(async (req, res) => {
       notes: body.notes || ''
     };
 
+    if (mongoConnected && mongoDb) {
+      try {
+        await mongoDb.collection('earnings').insertOne(newEarning);
+      } catch (e) {
+        console.error('MongoDB POST Earning error:', e.message);
+      }
+    }
+
     db.earnings.unshift(newEarning);
     writeDB(db);
     return sendJSON(res, 201, newEarning);
@@ -186,8 +280,6 @@ const server = http.createServer(async (req, res) => {
     const id = pathname.replace('/api/earnings/', '');
     const body = await parseJSONBody(req);
     const db = readDB();
-    const index = db.earnings.findIndex(e => e.id === id);
-    if (index === -1) return sendJSON(res, 404, { error: 'Earning record not found' });
 
     const total = parseFloat(body.totalEarnings) || 0;
     const fuel = parseFloat(body.fuelExpense) || 0;
@@ -196,17 +288,32 @@ const server = http.createServer(async (req, res) => {
 
     const driver = db.drivers.find(d => d.id === body.driverId) || {};
 
-    db.earnings[index] = {
-      ...db.earnings[index],
-      driverId: body.driverId || db.earnings[index].driverId,
-      driverName: body.driverName || driver.name || db.earnings[index].driverName,
-      carNumber: body.carNumber || driver.carNumber || db.earnings[index].carNumber,
-      date: body.date || db.earnings[index].date,
+    const updatedEarning = {
+      driverId: body.driverId,
+      driverName: body.driverName || driver.name,
+      carNumber: body.carNumber || driver.carNumber,
+      date: body.date,
       totalEarnings: total,
       fuelExpense: fuel,
       otherExpense: other,
       netEarning: net,
-      notes: body.notes !== undefined ? body.notes : db.earnings[index].notes
+      notes: body.notes
+    };
+
+    if (mongoConnected && mongoDb) {
+      try {
+        await mongoDb.collection('earnings').updateOne({ id }, { $set: updatedEarning });
+      } catch (e) {
+        console.error('MongoDB PUT Earning error:', e.message);
+      }
+    }
+
+    const index = db.earnings.findIndex(e => e.id === id);
+    if (index === -1) return sendJSON(res, 404, { error: 'Earning record not found' });
+
+    db.earnings[index] = {
+      ...db.earnings[index],
+      ...updatedEarning
     };
 
     writeDB(db);
@@ -216,6 +323,15 @@ const server = http.createServer(async (req, res) => {
   // DELETE Earning (/api/earnings/:id)
   if (pathname.startsWith('/api/earnings/') && method === 'DELETE') {
     const id = pathname.replace('/api/earnings/', '');
+
+    if (mongoConnected && mongoDb) {
+      try {
+        await mongoDb.collection('earnings').deleteOne({ id });
+      } catch (e) {
+        console.error('MongoDB DELETE Earning error:', e.message);
+      }
+    }
+
     const db = readDB();
     db.earnings = db.earnings.filter(e => e.id !== id);
     writeDB(db);
@@ -230,7 +346,6 @@ const server = http.createServer(async (req, res) => {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        // Fallback to index.html for SPA routing
         fs.readFile(path.join(PUBLIC_DIR, 'index.html'), (err2, html) => {
           if (err2) {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -252,5 +367,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Brothers Transport Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Brothers Transport Server running on http://localhost:${PORT}`);
+  console.log(`🔑 API Key loaded: ${API_KEY ? 'Active' : 'None'}`);
 });
