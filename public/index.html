@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brothers Transport Lahore - InDrive Fleet & Daily Driver Earnings Management</title>
+  <meta name="description" content="Professional InDrive driver management and Suzuki Alto fleet earnings daily tracking system in Lahore, Pakistan. Business owner: Ahsan Shakoor.">
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Chart.js CDN for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" onclick="switchTab('home')">
+        <span class="brand-badge"><i class="fa-solid fa-car-side"></i></span>
+        <span>Brothers <span style="color: var(--primary);">Transport</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a class="nav-link active" id="nav-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a class="nav-link" id="nav-dashboard" onclick="protectedTab('dashboard')"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a class="nav-link" id="nav-drivers" onclick="protectedTab('drivers')"><i class="fa-solid fa-id-card"></i> Drivers</a></li>
+        <li><a class="nav-link" id="nav-earnings" onclick="protectedTab('earnings')"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings</a></li>
+        <li><a class="nav-link" id="nav-reports" onclick="protectedTab('reports')"><i class="fa-solid fa-file-invoice-dollar"></i> Reports</a></li>
+        <li><a class="nav-link" id="nav-contact" onclick="switchTab('contact')"><i class="fa-solid fa-phone"></i> Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="auth-btn" class="btn btn-secondary btn-sm" onclick="handleAuthToggle()">
+          <i class="fa-solid fa-lock"></i> <span id="auth-btn-text">Admin Login</span>
+        </button>
+        <a href="https://wa.me/923207843805" target="_blank" class="btn btn-whatsapp btn-sm">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HOME PAGE (PUBLIC) ================= -->
+    <section id="tab-home" class="tab-content active">
+      <div class="hero">
+        <div class="container hero-grid">
+          <div class="hero-text">
+            <div class="hero-tag">
+              <i class="fa-solid fa-location-dot"></i> Lahore, Pakistan • Suzuki Alto Fleet
+            </div>
+            <h1 class="hero-title">
+              Brothers Transport <br>
+              <span class="text-gradient">Smart Driver & InDrive Earnings Management</span>
+            </h1>
+            <p class="hero-description">
+              Lahore’s premier InDrive driver management and Suzuki Alto car rental business. We manage daily driver earnings, fuel expenses, vehicle maintenance, and net profit settlements with total transparency.
+            </p>
+            <div class="hero-ctas">
+              <button class="btn btn-primary" onclick="protectedTab('dashboard')">
+                <i class="fa-solid fa-gauge-high"></i> Open Dashboard
+              </button>
+              <a href="https://wa.me/923207843805" target="_blank" class="btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> Contact on WhatsApp
+              </a>
+              <a href="mailto:ahsanshakoor04@gmail.com" class="btn btn-secondary">
+                <i class="fa-solid fa-envelope"></i> Email Us
+              </a>
+            </div>
+
+            <!-- Business Stats Counter -->
+            <div style="display: flex; gap: 2rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem; flex-wrap: wrap;">
+              <div>
+                <h3 style="color: var(--primary); font-size: 1.6rem; font-weight: 800;">100%</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Daily Settlement</p>
+              </div>
+              <div>
+                <h3 style="color: #60A5FA; font-size: 1.6rem; font-weight: 800;">Suzuki Alto</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">InDrive Fleet Specialist</p>
+              </div>
+              <div>
+                <h3 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 800;">Lahore</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Gulberg, DHA, Johar Town</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-image-wrapper">
+            <img src="assets/suzuki_alto_fleet.jpg" alt="Brothers Transport Suzuki Alto Fleet Lahore">
+            <div class="hero-card-badge">
+              <div class="hero-card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div>
+                <h4 style="font-size: 0.95rem; font-weight: 700;">Verified InDrive Management</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary);">Official Business System • Lahore PK</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="features-section container">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Built Specially for InDrive Fleet Owners</h2>
+          <p class="section-subtitle">Streamlined daily earnings calculation, expense logging, and driver performance management.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-calculator"></i></div>
+            <h3>Automated Net Calculation</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.5rem;">
+              Instant calculation of <strong>Net Earning = Total InDrive Earning - Fuel Expense - Other Expenses</strong>. No manual math required.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <h3>Interactive Visual Analytics</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.5rem;">
+              Real-time charts showing daily trends, monthly profits, driver performance comparisons, and fuel vs maintenance cost ratios.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <h3>Driver & Alto Fleet Profiles</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.5rem;">
+              Manage driver CNIC, phone number, vehicle registration number (e.g., LEB-3492), car model, joining date, and active/inactive status.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-file-export"></i></div>
+            <h3>CSV & PDF Financial Reports</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.5rem;">
+              Filter report records by date range, month, or specific driver and export clean CSV/Excel files or printable statement PDFs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DASHBOARD PAGE (ADMIN) ================= -->
+    <section id="tab-dashboard" class="tab-content container" style="padding-top: 2rem;">
+      <div class="dashboard-header">
+        <div>
+          <h1 style="font-size: 2rem;">Admin Financial Dashboard</h1>
+          <p style="color: var(--text-secondary);">Real-time summary of Brothers Transport Lahore fleet earnings & expenses</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-primary" onclick="openEarningModal()">
+            <i class="fa-solid fa-plus"></i> Log Daily Earning
+          </button>
+          <button class="btn btn-secondary" onclick="openDriverModal()">
+            <i class="fa-solid fa-user-plus"></i> Add Driver
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Total Drivers</span>
+            <div class="kpi-icon blue"><i class="fa-solid fa-users"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-total-drivers">0</div>
+          <div class="kpi-footer"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <span id="kpi-active-drivers">0</span> Active Drivers</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Today's Total</span>
+            <div class="kpi-icon green"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-today-earnings">Rs. 0</div>
+          <div class="kpi-footer">Gross InDrive Income Today</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Today's Expenses</span>
+            <div class="kpi-icon red"><i class="fa-solid fa-gas-pump"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-today-expenses">Rs. 0</div>
+          <div class="kpi-footer">Fuel & Maintenance Today</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Today's Net Profit</span>
+            <div class="kpi-icon green"><i class="fa-solid fa-sack-dollar"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-today-net" style="color: var(--primary);">Rs. 0</div>
+          <div class="kpi-footer">Net Business Profit Today</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Monthly Earnings</span>
+            <div class="kpi-icon blue"><i class="fa-solid fa-calendar-days"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-month-earnings">Rs. 0</div>
+          <div class="kpi-footer">Current Month Gross</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Monthly Expenses</span>
+            <div class="kpi-icon gold"><i class="fa-solid fa-receipt"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-month-expenses">Rs. 0</div>
+          <div class="kpi-footer">Current Month Fuel & Misc</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Monthly Net Profit</span>
+            <div class="kpi-icon green"><i class="fa-solid fa-chart-line"></i></div>
+          </div>
+          <div class="kpi-value" id="kpi-month-net" style="color: var(--primary);">Rs. 0</div>
+          <div class="kpi-footer">Current Month Net Profit</div>
+        </div>
+      </div>
+
+      <!-- Analytics Charts -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Daily Earnings Trend (PKR)</h3>
+            <span class="badge badge-info">Last 7 Days</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="dailyTrendChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Monthly Income vs Expenses</h3>
+            <span class="badge badge-success">Overall Comparison</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="monthlyComparisonChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Driver-wise Earnings</h3>
+            <span class="badge badge-info">Net Earning Breakdown</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="driverEarningsChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Expense Breakdown</h3>
+            <span class="badge badge-danger">Fuel vs Maintenance</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="expenseBreakdownChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DRIVERS PAGE (ADMIN) ================= -->
+    <section id="tab-drivers" class="tab-content container" style="padding-top: 2rem;">
+      <div class="dashboard-header">
+        <div>
+          <h1 style="font-size: 2rem;">Driver & Alto Vehicle Profiles</h1>
+          <p style="color: var(--text-secondary);">Manage active InDrive drivers, car registration numbers, and contact info</p>
+        </div>
+        <button class="btn btn-primary" onclick="openDriverModal()">
+          <i class="fa-solid fa-user-plus"></i> Add New Driver
+        </button>
+      </div>
+
+      <div class="controls-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="driver-search-input" placeholder="Search driver name, phone, CNIC, or car number..." onkeyup="renderDriversTable()">
+        </div>
+        <div class="filter-group">
+          <select id="driver-status-filter" class="form-select" onchange="renderDriversTable()">
+            <option value="ALL">All Status (Active & Inactive)</option>
+            <option value="Active" selected>Active Drivers Only</option>
+            <option value="Inactive">Inactive Drivers</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Driver Name</th>
+              <th>Car Number</th>
+              <th>Car Model</th>
+              <th>Phone Number</th>
+              <th>CNIC</th>
+              <th>Joining Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="drivers-table-body">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= DAILY & MONTHLY EARNINGS PAGE (ADMIN) ================= -->
+    <section id="tab-earnings" class="tab-content container" style="padding-top: 2rem;">
+      <div class="dashboard-header">
+        <div>
+          <h1 style="font-size: 2rem;">Earnings & Expenses Management</h1>
+          <p style="color: var(--text-secondary);">Log daily or monthly InDrive earnings, fuel expenses, vehicle maintenance, and auto-calculate net profit</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="openEarningModal()">
+            <i class="fa-solid fa-plus-circle"></i> Log Daily Earning
+          </button>
+          <button class="btn btn-secondary" onclick="openMonthlyModal()">
+            <i class="fa-solid fa-calendar-plus"></i> Log Monthly Summary
+          </button>
+        </div>
+      </div>
+
+      <!-- View Mode & Filters -->
+      <div class="controls-bar">
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; width: 100%; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">
+          <button id="view-mode-daily" class="btn btn-primary btn-sm" onclick="setEarningViewMode('daily')">
+            <i class="fa-solid fa-calendar-day"></i> Daily Records View
+          </button>
+          <button id="view-mode-monthly" class="btn btn-secondary btn-sm" onclick="setEarningViewMode('monthly')">
+            <i class="fa-solid fa-calendar-days"></i> Monthly Aggregated View
+          </button>
+        </div>
+
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="earning-search-input" placeholder="Search by driver name, car number, or notes..." onkeyup="renderEarningsTable()">
+        </div>
+        <div class="filter-group">
+          <select id="earning-driver-filter" class="form-select" onchange="renderEarningsTable()">
+            <option value="ALL">All Drivers</option>
+            <!-- Populated dynamically -->
+          </select>
+          <input type="date" id="earning-date-filter" class="form-input" onchange="renderEarningsTable()">
+          <input type="month" id="earning-month-filter" class="form-input" onchange="renderEarningsTable()">
+          <button class="btn btn-secondary btn-sm" onclick="resetEarningFilters()">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Earnings Table -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead id="earnings-table-head">
+            <tr>
+              <th>Date</th>
+              <th>Driver Name</th>
+              <th>Car No.</th>
+              <th>Total Earnings (PKR)</th>
+              <th>Fuel Expense (PKR)</th>
+              <th>Other Expense (PKR)</th>
+              <th>Net Earning (PKR)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="earnings-table-body">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= REPORTS PAGE (ADMIN) ================= -->
+    <section id="tab-reports" class="tab-content container" style="padding-top: 2rem;">
+      <div class="dashboard-header">
+        <div>
+          <h1 style="font-size: 2rem;">Financial Reports & Audits</h1>
+          <p style="color: var(--text-secondary);">Filter earnings statement by date range or driver and export CSV or PDF reports</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-primary" onclick="exportReportsCSV()">
+            <i class="fa-solid fa-file-csv"></i> Export CSV / Excel
+          </button>
+          <button class="btn btn-secondary" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Print Statement
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Presets -->
+      <div class="controls-bar">
+        <div class="filter-group" style="width: 100%; justify-content: space-between; flex-wrap: wrap;">
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="setReportRange('today')">Today</button>
+            <button class="btn btn-secondary btn-sm" onclick="setReportRange('week')">This Week</button>
+            <button class="btn btn-secondary btn-sm" onclick="setReportRange('month')">This Month</button>
+            <button class="btn btn-secondary btn-sm" onclick="setReportRange('all')">All Time</button>
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <label class="form-label" style="margin: 0;">Driver:</label>
+            <select id="report-driver-filter" class="form-select" onchange="calculateReportStats()">
+              <option value="ALL">All Drivers</option>
+            </select>
+            <label class="form-label" style="margin: 0;">From:</label>
+            <input type="date" id="report-start-date" class="form-input" onchange="calculateReportStats()">
+            <label class="form-label" style="margin: 0;">To:</label>
+            <input type="date" id="report-end-date" class="form-input" onchange="calculateReportStats()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Report KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Filtered Earnings</span>
+            <div class="kpi-icon green"><i class="fa-solid fa-wallet"></i></div>
+          </div>
+          <div class="kpi-value" id="report-total-income">Rs. 0</div>
+          <div class="kpi-footer">Gross InDrive Revenue</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Filtered Expenses</span>
+            <div class="kpi-icon red"><i class="fa-solid fa-gas-pump"></i></div>
+          </div>
+          <div class="kpi-value" id="report-total-expenses">Rs. 0</div>
+          <div class="kpi-footer">Fuel & Maintenance</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Net Profit</span>
+            <div class="kpi-icon green"><i class="fa-solid fa-coins"></i></div>
+          </div>
+          <div class="kpi-value" id="report-net-profit" style="color: var(--primary);">Rs. 0</div>
+          <div class="kpi-footer">Clean Net Profit</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-title">Working Shift Days</span>
+            <div class="kpi-icon blue"><i class="fa-solid fa-calendar-check"></i></div>
+          </div>
+          <div class="kpi-value" id="report-working-days">0</div>
+          <div class="kpi-footer">Total Driver Daily Records</div>
+        </div>
+      </div>
+
+      <!-- Printable Report Table -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Driver Name</th>
+              <th>Car Number</th>
+              <th>Total Earnings (PKR)</th>
+              <th>Fuel (PKR)</th>
+              <th>Other (PKR)</th>
+              <th>Net Profit (PKR)</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="report-table-body">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT PAGE ================= -->
+    <section id="tab-contact" class="tab-content container" style="padding-top: 3rem; padding-bottom: 4rem;">
+      <div class="section-title-wrap">
+        <h1 class="section-title">Contact Brothers Transport Lahore</h1>
+        <p class="section-subtitle">Get in touch with us for driver recruitment, Suzuki Alto rentals, or InDrive fleet partnerships.</p>
+      </div>
+
+      <div class="hero-grid" style="align-items: start;">
+        <div class="feature-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="feature-icon" style="margin: 0;"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <h4 style="font-size: 1.1rem;">Head Office Address</h4>
+              <p style="color: var(--text-secondary);">Gulberg III / Model Town, Lahore, Punjab, Pakistan</p>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="feature-icon" style="margin: 0; background: rgba(37, 211, 102, 0.15); color: #25D366;"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <h4 style="font-size: 1.1rem;">WhatsApp & Direct Contact</h4>
+              <p style="color: var(--text-secondary); font-weight: 700; font-size: 1.1rem;">03207843805</p>
+              <a href="https://wa.me/923207843805" target="_blank" class="btn btn-whatsapp btn-sm" style="margin-top: 0.5rem;">
+                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp (03207843805)
+              </a>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="feature-icon" style="margin: 0; background: rgba(59, 130, 246, 0.15); color: #60A5FA;"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <h4 style="font-size: 1.1rem;">Email Address</h4>
+              <p style="color: var(--text-secondary); font-weight: 600;">ahsanshakoor04@gmail.com</p>
+              <a href="mailto:ahsanshakoor04@gmail.com" class="btn btn-secondary btn-sm" style="margin-top: 0.5rem;">
+                <i class="fa-solid fa-paper-plane"></i> Send Email
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <h3 style="margin-bottom: 1.25rem;">Send Us a Message</h3>
+          <form onsubmit="handleContactSubmit(event)">
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label class="form-label">Your Name</label>
+              <input type="text" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label class="form-label">Phone Number</label>
+              <input type="text" class="form-control" placeholder="03XX-XXXXXXX" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label class="form-label">Message / Inquiry</label>
+              <textarea class="form-control" rows="4" placeholder="How can Brothers Transport help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> Submit Inquiry
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div id="modal-auth" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i> Admin Access Security</h3>
+        <button class="modal-close" onclick="closeModal('modal-auth')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-secondary); margin-bottom: 1.25rem;">
+          Financial data and driver management are protected. Please enter the Admin Security PIN to continue.
+        </p>
+        <div class="form-group">
+          <label class="form-label">Admin PIN / Password</label>
+          <input type="password" id="auth-pin-input" class="form-control" placeholder="Enter Admin PIN (Default: admin123)" onkeyup="if(event.key==='Enter') submitAdminLogin()">
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+          <i class="fa-solid fa-circle-info"></i> Default PIN is <strong>admin123</strong> or <strong>03207843805</strong>.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-auth')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitAdminLogin()">Login as Admin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT DRIVER MODAL -->
+  <div id="modal-driver" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-driver-title"><i class="fa-solid fa-user-plus" style="color: var(--primary);"></i> Add New Driver</h3>
+        <button class="modal-close" onclick="closeModal('modal-driver')">&times;</button>
+      </div>
+      <form id="driver-form" onsubmit="saveDriver(event)">
+        <div class="modal-body">
+          <input type="hidden" id="driver-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Driver Full Name *</label>
+              <input type="text" id="driver-name" class="form-control" placeholder="e.g. Muhammad Usman" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input type="text" id="driver-phone" class="form-control" placeholder="0301-4455667" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Car Number (Lahore Reg) *</label>
+              <input type="text" id="driver-car-number" class="form-control" placeholder="e.g. LEB-3492" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Car Model *</label>
+              <select id="driver-car-model" class="form-select">
+                <option value="Suzuki Alto VXR 2022">Suzuki Alto VXR 2022</option>
+                <option value="Suzuki Alto VXL AGS 2023">Suzuki Alto VXL AGS 2023</option>
+                <option value="Suzuki Alto VXR 2023">Suzuki Alto VXR 2023</option>
+                <option value="Suzuki Alto VXR 2021">Suzuki Alto VXR 2021</option>
+                <option value="Suzuki Alto VX 2020">Suzuki Alto VX 2020</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CNIC Number (Optional)</label>
+              <input type="text" id="driver-cnic" class="form-control" placeholder="35202-XXXXXXX-X">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Joining Date</label>
+              <input type="date" id="driver-joining-date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Driver Status</label>
+              <select id="driver-status" class="form-select">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Notes / Shift Details</label>
+              <input type="text" id="driver-notes" class="form-control" placeholder="e.g. Gulberg & Johar Town routes">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-driver')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Driver Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT DAILY EARNING MODAL -->
+  <div id="modal-earning" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-earning-title"><i class="fa-solid fa-money-bill-wave" style="color: var(--primary);"></i> Log Daily Driver Earning</h3>
+        <button class="modal-close" onclick="closeModal('modal-earning')">&times;</button>
+      </div>
+      <form id="earning-form" onsubmit="saveEarning(event)">
+        <div class="modal-body">
+          <input type="hidden" id="earning-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Select Driver *</label>
+              <select id="earning-driver-id" class="form-select" required onchange="autoFillDriverDetails()">
+                <option value="">-- Choose Driver --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date *</label>
+              <input type="date" id="earning-date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total InDrive Earnings (PKR) *</label>
+              <input type="number" id="earning-total" class="form-control" placeholder="e.g. 7200" min="0" step="50" required oninput="autoCalculateNet()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fuel Expense (PKR) *</label>
+              <input type="number" id="earning-fuel" class="form-control" placeholder="e.g. 2200" min="0" step="50" required oninput="autoCalculateNet()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Other Expense (PKR)</label>
+              <input type="number" id="earning-other" class="form-control" placeholder="e.g. 300 (Oil, Toll, Maintenance)" min="0" step="50" value="0" oninput="autoCalculateNet()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Automatically Calculated Net (PKR)</label>
+              <input type="number" id="earning-net" class="form-control" readonly placeholder="Net Earning">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Notes & Remarks</label>
+              <input type="text" id="earning-notes" class="form-control" placeholder="e.g. 14 rides completed. Oil top up 300 PKR">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-earning')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Earning Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT MONTHLY SUMMARY MODAL -->
+  <div id="modal-monthly" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-monthly-title"><i class="fa-solid fa-calendar-days" style="color: var(--primary);"></i> Log Monthly Driver Earning Summary</h3>
+        <button class="modal-close" onclick="closeModal('modal-monthly')">&times;</button>
+      </div>
+      <form id="monthly-form" onsubmit="saveMonthlyEarning(event)">
+        <div class="modal-body">
+          <input type="hidden" id="monthly-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Select Driver *</label>
+              <select id="monthly-driver-id" class="form-select" required>
+                <option value="">-- Choose Driver --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Target Month & Year *</label>
+              <input type="month" id="monthly-month" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Monthly InDrive Earnings (PKR) *</label>
+              <input type="number" id="monthly-total" class="form-control" placeholder="e.g. 195000" min="0" step="500" required oninput="autoCalculateMonthlyNet()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Monthly Fuel Expense (PKR) *</label>
+              <input type="number" id="monthly-fuel" class="form-control" placeholder="e.g. 62000" min="0" step="500" required oninput="autoCalculateMonthlyNet()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Maintenance & Misc Expense (PKR)</label>
+              <input type="number" id="monthly-other" class="form-control" placeholder="e.g. 7500 (Oil change, Tuning, Fines)" min="0" step="100" value="0" oninput="autoCalculateMonthlyNet()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Calculated Net Monthly Profit (PKR)</label>
+              <input type="number" id="monthly-net" class="form-control" readonly placeholder="Net Monthly Earning">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Working Days in Month</label>
+              <input type="number" id="monthly-days" class="form-control" placeholder="e.g. 26" min="1" max="31" value="26">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Monthly Audit Notes & Remarks</label>
+              <input type="text" id="monthly-notes" class="form-control" placeholder="e.g. Full month settlement. New tires installed 7,500 PKR.">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-monthly')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Monthly Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- VIEW RECORD DETAILS MODAL -->
+  <div id="modal-details" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-receipt" style="color: var(--primary);"></i> Daily Earning Receipt Details</h3>
+        <button class="modal-close" onclick="closeModal('modal-details')">&times;</button>
+      </div>
+      <div class="modal-body" id="details-modal-body">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal('modal-details')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/923207843805" target="_blank" class="whatsapp-float" title="Contact Brothers Transport Lahore on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="brand-logo">
+          <span class="brand-badge"><i class="fa-solid fa-car-side"></i></span>
+          <span>Brothers <span style="color: var(--primary);">Transport</span></span>
+        </a>
+        <p>
+          Lahore's premier InDrive driver management system for Suzuki Alto fleet operations. Managed with 100% financial accuracy and transparency.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a onclick="switchTab('home')">Home</a></li>
+          <li><a onclick="protectedTab('dashboard')">Admin Dashboard</a></li>
+          <li><a onclick="protectedTab('drivers')">Drivers Management</a></li>
+          <li><a onclick="protectedTab('earnings')">Daily Earnings Tracker</a></li>
+          <li><a onclick="protectedTab('reports')">Reports & Exports</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <ul class="footer-links">
+          <li><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Lahore, Pakistan</li>
+          <li><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> <a href="https://wa.me/923207843805" target="_blank">03207843805</a></li>
+          <li><i class="fa-solid fa-envelope" style="color: #60A5FA;"></i> <a href="mailto:ahsanshakoor04@gmail.com">ahsanshakoor04@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Brothers Transport Lahore. Designed for Ahsan Shakoor. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- App Script -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+{
+  "drivers": [
+    {
+      "id": "drv-1789627878590",
+      "name": "Sajid Khan",
+      "phone": "0300-9988776",
+      "cnic": "",
+      "carNumber": "LEB-9988",
+      "carModel": "Suzuki Alto VXR 2023",
+      "joiningDate": "2026-09-17",
+      "status": "Active",
+      "notes": ""
+    },
+    {
+      "id": "drv-1",
+      "name": "Muhammad Usman",
+      "phone": "0301-4455667",
+      "cnic": "35202-1234567-1",
+      "carNumber": "LEB-3492",
+      "carModel": "Suzuki Alto VXR 2022",
+      "joiningDate": "2025-08-10",
+      "status": "Active",
+      "notes": "Experienced driver, Gulberg & Johar Town area Specialist"
+    },
+    {
+      "id": "drv-2",
+      "name": "Ali Raza",
+      "phone": "0321-8899112",
+      "cnic": "35201-9876543-3",
+      "carNumber": "LEA-8821",
+      "carModel": "Suzuki Alto VXL AGS 2023",
+      "joiningDate": "2025-09-01",
+      "status": "Active",
+      "notes": "Full time InDrive night shift"
+    },
+    {
+      "id": "drv-3",
+      "name": "Hamza Sheikh",
+      "phone": "0333-7766554",
+      "cnic": "35202-5544332-9",
+      "carNumber": "LZE-5544",
+      "carModel": "Suzuki Alto VXR 2021",
+      "joiningDate": "2025-11-15",
+      "status": "Active",
+      "notes": "Airport & Ring Road long trips preference"
+    },
+    {
+      "id": "drv-4",
+      "name": "Bilal Ahmed",
+      "phone": "0304-1122334",
+      "cnic": "35200-3322110-5",
+      "carNumber": "LEC-1092",
+      "carModel": "Suzuki Alto VXR 2023",
+      "joiningDate": "2026-01-20",
+      "status": "Active",
+      "notes": "DHA Phase 5 & Model Town routes"
+    },
+    {
+      "id": "drv-5",
+      "name": "Shahid Mahmood",
+      "phone": "0312-9988776",
+      "cnic": "35202-8877665-7",
+      "carNumber": "LEG-7711",
+      "carModel": "Suzuki Alto VXL AGS 2022",
+      "joiningDate": "2026-03-05",
+      "status": "Inactive",
+      "notes": "On leave for vehicle maintenance"
+    }
+  ],
+  "earnings": [
+    {
+      "id": "earn-1789627894958",
+      "driverId": "drv-1789627878590",
+      "driverName": "Sajid Khan",
+      "carNumber": "LEB-9988",
+      "date": "2026-09-17",
+      "totalEarnings": 7500,
+      "fuelExpense": 2200,
+      "otherExpense": 300,
+      "netEarning": 5000,
+      "notes": "Full shift 15 InDrive rides"
+    },
+    {
+      "id": "earn-101",
+      "driverId": "drv-1",
+      "driverName": "Muhammad Usman",
+      "carNumber": "LEB-3492",
+      "date": "2026-09-17",
+      "totalEarnings": 7200,
+      "fuelExpense": 2200,
+      "otherExpense": 300,
+      "netEarning": 4700,
+      "notes": "14 rides completed. Oil top up 300 PKR"
+    },
+    {
+      "id": "earn-102",
+      "driverId": "drv-2",
+      "driverName": "Ali Raza",
+      "carNumber": "LEA-8821",
+      "date": "2026-09-17",
+      "totalEarnings": 6500,
+      "fuelExpense": 1900,
+      "otherExpense": 150,
+      "netEarning": 4450,
+      "notes": "12 rides. Toll plaza 150 PKR"
+    },
+    {
+      "id": "earn-103",
+      "driverId": "drv-3",
+      "driverName": "Hamza Sheikh",
+      "carNumber": "LZE-5544",
+      "date": "2026-09-17",
+      "totalEarnings": 8100,
+      "fuelExpense": 2500,
+      "otherExpense": 400,
+      "netEarning": 5200,
+      "notes": "2 long airport rides + 10 city rides. Car wash 400 PKR"
+    },
+    {
+      "id": "earn-104",
+      "driverId": "drv-4",
+      "driverName": "Bilal Ahmed",
+      "carNumber": "LEC-1092",
+      "date": "2026-09-17",
+      "totalEarnings": 5900,
+      "fuelExpense": 1800,
+      "otherExpense": 0,
+      "netEarning": 4100,
+      "notes": "Smooth day, 11 InDrive rides"
+    },
+    {
+      "id": "earn-105",
+      "driverId": "drv-1",
+      "driverName": "Muhammad Usman",
+      "carNumber": "LEB-3492",
+      "date": "2026-09-16",
+      "totalEarnings": 6800,
+      "fuelExpense": 2100,
+      "otherExpense": 200,
+      "netEarning": 4500,
+      "notes": "Gulberg & Cavalry Ground"
+    },
+    {
+      "id": "earn-106",
+      "driverId": "drv-2",
+      "driverName": "Ali Raza",
+      "carNumber": "LEA-8821",
+      "date": "2026-09-16",
+      "totalEarnings": 7400,
+      "fuelExpense": 2300,
+      "otherExpense": 0,
+      "netEarning": 5100,
+      "notes": "Night shift peak hours"
+    },
+    {
+      "id": "earn-107",
+      "driverId": "drv-3",
+      "driverName": "Hamza Sheikh",
+      "carNumber": "LZE-5544",
+      "date": "2026-09-16",
+      "totalEarnings": 6200,
+      "fuelExpense": 1950,
+      "otherExpense": 250,
+      "netEarning": 4000,
+      "notes": "Tire puncture repair 250 PKR"
+    },
+    {
+      "id": "earn-108",
+      "driverId": "drv-4",
+      "driverName": "Bilal Ahmed",
+      "carNumber": "LEC-1092",
+      "date": "2026-09-16",
+      "totalEarnings": 6600,
+      "fuelExpense": 2000,
+      "otherExpense": 100,
+      "netEarning": 4500,
+      "notes": "13 rides"
+    },
+    {
+      "id": "earn-109",
+      "driverId": "drv-1",
+      "driverName": "Muhammad Usman",
+      "carNumber": "LEB-3492",
+      "date": "2026-09-15",
+      "totalEarnings": 7000,
+      "fuelExpense": 2200,
+      "otherExpense": 0,
+      "netEarning": 4800,
+      "notes": "Regular shift"
+    },
+    {
+      "id": "earn-110",
+      "driverId": "drv-2",
+      "driverName": "Ali Raza",
+      "carNumber": "LEA-8821",
+      "date": "2026-09-15",
+      "totalEarnings": 6900,
+      "fuelExpense": 2150,
+      "otherExpense": 350,
+      "netEarning": 4400,
+      "notes": "Wiper blade replacement 350 PKR"
+    },
+    {
+      "id": "earn-111",
+      "driverId": "drv-3",
+      "driverName": "Hamza Sheikh",
+      "carNumber": "LZE-5544",
+      "date": "2026-09-14",
+      "totalEarnings": 7800,
+      "fuelExpense": 2400,
+      "otherExpense": 0,
+      "netEarning": 5400,
+      "notes": "Heavy InDrive bonus day"
+    },
+    {
+      "id": "earn-112",
+      "driverId": "drv-4",
+      "driverName": "Bilal Ahmed",
+      "carNumber": "LEC-1092",
+      "date": "2026-09-14",
+      "totalEarnings": 5500,
+      "fuelExpense": 1700,
+      "otherExpense": 0,
+      "netEarning": 3800,
+      "notes": "Half day shift"
+    }
+  ]
+}
